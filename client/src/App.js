@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
+import Home from './components/home page/Home';
 
 const App = () => (
   <React.Fragment>
-    <h1>Hello</h1>
+    <Home />
   </React.Fragment>
 );
 
