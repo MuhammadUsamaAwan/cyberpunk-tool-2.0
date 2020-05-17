@@ -1,0 +1,6 @@
+#server
+node_modules
+config/default.json
+
+#client
+client/node_modules
