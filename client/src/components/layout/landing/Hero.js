@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Landing = () => (
+const Hero = () => (
   <section className='landing'>
     <div className='dark-overlay'>
       <div className='landing-inner'>
@@ -23,4 +23,4 @@ const Landing = () => (
   </section>
 );
 
-export default Landing;
+export default Hero;

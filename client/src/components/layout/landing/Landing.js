@@ -1,12 +1,12 @@
 import React from 'react';
-import Landing from './Landing';
+import Hero from './Hero';
 import Features from './Features';
 
-const Home = () => (
+const Landing = () => (
   <React.Fragment>
-    <Landing />
+    <Hero />
     <Features />
   </React.Fragment>
 );
 
-export default Home;
+export default Landing;

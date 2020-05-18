@@ -5,9 +5,7 @@ const Navbar = () => {
   return (
     <nav className='navbar'>
       <h1>
-        <Link exact to='/'>
-          Cyberpunk Tool
-        </Link>
+        <Link to='/'>Cyberpunk Tool</Link>
       </h1>
       <ul>
         <li>
