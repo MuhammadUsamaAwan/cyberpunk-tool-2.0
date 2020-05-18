@@ -44,6 +44,46 @@ body {
   color: var(--dark-color);
 }
 
+/*background colors*/
+.alert {
+  padding: 0.8rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+  background: var(--light-color);
+  color: #333;
+}
+
+.bg-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.bg-light {
+  background: var(--light-color);
+  color: #333;
+}
+
+.bg-dark {
+  background: var(--dark-color);
+  color: #fff;
+}
+
+.bg-danger {
+  background: var(--danger-color);
+  color: #fff;
+}
+
+.bg-success {
+  background: var(--success-color);
+  color: #fff;
+}
+
+.bg-white {
+  background: #fff;
+  color: #333;
+  border: #ccc solid 1px;
+}
+/* annoying underline*/
 a {
   text-decoration: none;
 }
