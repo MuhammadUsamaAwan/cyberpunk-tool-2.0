@@ -31,7 +31,7 @@ const slice = createSlice({
       return {
         ...state,
         token: null,
-        isAuthenticated: true,
+        isAuthenticated: false,
         loading: false,
       };
     },
@@ -40,7 +40,34 @@ const slice = createSlice({
       return {
         ...state,
         token: null,
+        isAuthenticated: false,
+        loading: false,
+      };
+    },
+    LOGIN_SUCCESS: (state, action) => {
+      localStorage.setItem('token', action.payload.token);
+      return {
+        ...state,
+        ...action.payload,
         isAuthenticated: true,
+        loading: false,
+      };
+    },
+    LOGIN_FAIL: (state, action) => {
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+      };
+    },
+    LOGOUT: (state, action) => {
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
         loading: false,
       };
     },
@@ -52,5 +79,8 @@ export const {
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT,
 } = slice.actions;
 export default slice.reducer;
