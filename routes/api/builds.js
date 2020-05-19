@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middlewave/auth');
+const paginatedResults = require('../../middlewave/paginated');
 
 const Build = require('../../models/Build');
 const User = require('../../models/User');
@@ -11,11 +12,12 @@ const User = require('../../models/User');
 // @access   Private
 router.post(
   '/',
-  [auth,
+  [
+    auth,
     [
       check('text', 'Text is required').not().isEmpty(),
-      check('title', 'Title is required').not().isEmpty()
-    ]
+      check('title', 'Title is required').not().isEmpty(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -31,7 +33,7 @@ router.post(
         title: req.body.title,
         name: user.name,
         user: req.user.id,
-        private: req.body.private
+        private: req.body.private,
       });
 
       const build = await newBuild.save();
@@ -47,10 +49,9 @@ router.post(
 // @route    GET api/builds
 // @desc     Get all builds
 // @access   Public
-router.get('/', async (req, res) => {
+router.get('/', paginatedResults(Build), async (req, res) => {
   try {
-    const builds = await Build.find().sort({ date: -1 });
-    res.json(builds);
+    res.json(res.paginatedResults);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

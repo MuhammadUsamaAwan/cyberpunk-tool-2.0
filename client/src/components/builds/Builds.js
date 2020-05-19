@@ -16,7 +16,7 @@ const Builds = ({
   searchBuilds,
 }) => {
   useEffect(() => {
-    getBuilds();
+    getBuilds(1, 20);
   }, []);
 
   const [searchText, setSearchText] = useState('');
@@ -24,7 +24,7 @@ const Builds = ({
   const onChange = (e) => setSearchText(e.target.value);
   const onSubmit = (e) => {
     e.preventDefault();
-    searchBuilds(searchText);
+    searchBuilds(1, 20, 'newest', searchText);
   };
 
   return (
@@ -49,15 +49,21 @@ const Builds = ({
           </button>
           <div className='dropdown-content'>
             <div
-              onClick={() => sortBuilds('upvotes')}
+              onClick={() => sortBuilds(1, 20, 'upvotes')}
               className='dropdown-link'
             >
               By Upvotes
             </div>
-            <div onClick={() => sortBuilds('newest')} className='dropdown-link'>
+            <div
+              onClick={() => sortBuilds(1, 20, 'newest')}
+              className='dropdown-link'
+            >
               Newest First
             </div>
-            <div onClick={() => sortBuilds('oldest')} className='dropdown-link'>
+            <div
+              onClick={() => sortBuilds(1, 20, 'oldest')}
+              className='dropdown-link'
+            >
               Oldest First
             </div>
           </div>
@@ -75,7 +81,7 @@ const Builds = ({
           </thead>
 
           <tbody className='primary'>
-            {builds.map((build) => (
+            {builds.results.map((build) => (
               <tr key={build._id}>
                 <td>
                   {' '}
