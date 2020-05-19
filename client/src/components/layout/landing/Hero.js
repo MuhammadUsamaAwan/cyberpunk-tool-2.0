@@ -5,7 +5,7 @@ const Hero = () => (
   <section className='landing'>
     <div className='dark-overlay'>
       <div className='landing-inner'>
-        <h1 className='x-large'>Cyperpunk Tool</h1>
+        <h1 className='x-large'>Cyberpunk Tool</h1>
         <p className='lead'>
           Craft a perfectly min-maxed character. Save your builds and share them
           with others or browse other people's submitted builds.

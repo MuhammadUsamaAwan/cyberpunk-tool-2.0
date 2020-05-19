@@ -424,6 +424,30 @@ button {
   text-align: center;
 }
 
+/* for pagination*/
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.pagination a {
+  color: var(--primary-color);
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #1a4040;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #3a4e93;
+}
+
 /* media screen for responsiveness*/
 @media screen and (max-width: 768px) {
   .flex-container {
@@ -468,5 +492,10 @@ button {
 
   .search {
     width: 10rem;
+    height: 3rem;
+  }
+
+  .search-icon {
+    height: 3rem;
   }
 }

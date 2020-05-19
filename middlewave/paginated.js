@@ -7,23 +7,13 @@ module.exports = function paginatedResults(model) {
     const text = req.query.text;
 
     const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
 
     const results = {};
 
-    if (endIndex < (await model.countDocuments().exec())) {
-      results.next = {
-        page: page + 1,
-        limit: limit,
-      };
-    }
+    results.pages = Math.ceil(
+      parseFloat((await model.countDocuments().exec()) / limit)
+    );
 
-    if (startIndex > 0) {
-      results.previous = {
-        page: page - 1,
-        limit: limit,
-      };
-    }
     try {
       if (user === undefined) {
         if (text === undefined) {

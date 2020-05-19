@@ -8,6 +8,7 @@ import {
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
+import Pagination from '../../ultis/Pagination';
 
 const Builds = ({
   getBuilds,
@@ -15,16 +16,22 @@ const Builds = ({
   sortBuilds,
   searchBuilds,
 }) => {
-  useEffect(() => {
-    getBuilds(1, 20);
-  }, []);
-
   const [searchText, setSearchText] = useState('');
+  const [currPage, setCurrPage] = useState(1);
+
+  useEffect(() => {
+    getBuilds(currPage, 20);
+  }, [currPage]);
 
   const onChange = (e) => setSearchText(e.target.value);
   const onSubmit = (e) => {
     e.preventDefault();
-    searchBuilds(1, 20, 'newest', searchText);
+    setCurrPage(1);
+    searchBuilds(currPage, 20, 'newest', searchText);
+  };
+  const onClick = (e) => {
+    setCurrPage(1);
+    sortBuilds(currPage, 20, e.target.id);
   };
 
   return (
@@ -48,58 +55,56 @@ const Builds = ({
             Sort Builds <i className='fa fa-sort-desc'></i>
           </button>
           <div className='dropdown-content'>
-            <div
-              onClick={() => sortBuilds(1, 20, 'upvotes')}
-              className='dropdown-link'
-            >
+            <a id='upvotes' onClick={onClick} className='dropdown-link'>
               By Upvotes
-            </div>
-            <div
-              onClick={() => sortBuilds(1, 20, 'newest')}
-              className='dropdown-link'
-            >
+            </a>
+            <a id='newest' onClick={onClick} className='dropdown-link'>
               Newest First
-            </div>
-            <div
-              onClick={() => sortBuilds(1, 20, 'oldest')}
-              className='dropdown-link'
-            >
+            </a>
+            <a id='oldest' onClick={onClick} className='dropdown-link'>
               Oldest First
-            </div>
+            </a>
           </div>
         </div>
       </div>
       {!loading ? (
-        <table className='table'>
-          <thead>
-            <tr className='secondary'>
-              <th>Title</th>
-              <th>Upvotes</th>
-              <th>Author</th>
-              <th>Created On</th>
-            </tr>
-          </thead>
-
-          <tbody className='primary'>
-            {builds.results.map((build) => (
-              <tr key={build._id}>
-                <td>
-                  {' '}
-                  <Link to={`/builds/${build._id}`} className='link'>
-                    {build.title}
-                  </Link>{' '}
-                </td>
-                <td>{build.upvotes.length}</td>
-                <td>
-                  <Link to={`/profile/${build.user}`} className='link'>
-                    {build.name}
-                  </Link>
-                </td>
-                <td>{build.date.slice(0, 10)}</td>
+        <div>
+          <table className='table'>
+            <thead>
+              <tr className='secondary'>
+                <th>Title</th>
+                <th>Upvotes</th>
+                <th>Author</th>
+                <th>Created On</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody className='primary'>
+              {builds.results.map((build) => (
+                <tr key={build._id}>
+                  <td>
+                    {' '}
+                    <Link to={`/builds/${build._id}`} className='link'>
+                      {build.title}
+                    </Link>{' '}
+                  </td>
+                  <td>{build.upvotes.length}</td>
+                  <td>
+                    <Link to={`/profile/${build.user}`} className='link'>
+                      {build.name}
+                    </Link>
+                  </td>
+                  <td>{build.date.slice(0, 10)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <Pagination
+            currPage={currPage}
+            setCurrPage={setCurrPage}
+            totalPage={builds.pages}
+          />
+        </div>
       ) : (
         <Spinner />
       )}
