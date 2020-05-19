@@ -1,37 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  getBuilds,
-  sortBuilds,
-  searchBuilds,
-} from '../../store/actions/builds';
+import { getBuilds } from '../../store/actions/builds';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import Pagination from '../../ultis/Pagination';
 
-const Builds = ({
-  getBuilds,
-  builds: { builds, loading },
-  sortBuilds,
-  searchBuilds,
-}) => {
+const Builds = ({ getBuilds, builds: { builds, loading } }) => {
   const [searchText, setSearchText] = useState('');
+  const [text, setText] = useState('');
   const [currPage, setCurrPage] = useState(1);
+  const [sort, setSort] = useState('');
 
   useEffect(() => {
-    getBuilds(currPage, 20);
-  }, [currPage]);
+    getBuilds(currPage, 3, sort, text);
+  }, [currPage, sort, text]);
 
   const onChange = (e) => setSearchText(e.target.value);
   const onSubmit = (e) => {
     e.preventDefault();
     setCurrPage(1);
-    searchBuilds(currPage, 20, 'newest', searchText);
+    setText(searchText);
   };
   const onClick = (e) => {
     setCurrPage(1);
-    sortBuilds(currPage, 20, e.target.id);
+    setSort(e.target.id);
   };
 
   return (
@@ -114,8 +107,6 @@ const Builds = ({
 
 Builds.propTypes = {
   getBuilds: PropTypes.func.isRequired,
-  sortBuilds: PropTypes.func.isRequired,
-  searchBuilds: PropTypes.func.isRequired,
   build: PropTypes.array,
 };
 
@@ -123,8 +114,4 @@ const mapStateToProps = (state) => ({
   builds: state.builds,
 });
 
-export default connect(mapStateToProps, {
-  getBuilds,
-  sortBuilds,
-  searchBuilds,
-})(Builds);
+export default connect(mapStateToProps, { getBuilds })(Builds);

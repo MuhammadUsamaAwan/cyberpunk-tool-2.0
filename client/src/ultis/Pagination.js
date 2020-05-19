@@ -26,9 +26,9 @@ const Pagination = ({ currPage, totalPage, setCurrPage }) => {
       <a href='#!' className='active'>
         {currPage}
       </a>
-      {totalPage > currPage + 2 && (
-        <a href='#!' onClick={() => setCurrPage(currPage + 3)}>
-          {currPage + 3}
+      {totalPage > currPage && (
+        <a href='#!' onClick={() => setCurrPage(currPage + 1)}>
+          {currPage + 1}
         </a>
       )}
       {totalPage > currPage + 1 && (
@@ -36,9 +36,9 @@ const Pagination = ({ currPage, totalPage, setCurrPage }) => {
           {currPage + 2}
         </a>
       )}
-      {totalPage > currPage && (
-        <a href='#!' onClick={() => setCurrPage(currPage + 1)}>
-          {currPage + 1}
+      {totalPage > currPage + 2 && (
+        <a href='#!' onClick={() => setCurrPage(currPage + 3)}>
+          {currPage + 3}
         </a>
       )}
       {totalPage > currPage && (

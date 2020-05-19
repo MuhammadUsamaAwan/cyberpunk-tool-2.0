@@ -14,22 +14,8 @@ const slice = createSlice({
         loading: false,
       };
     },
-    SORT_BUILDS: (state, action) => {
-      return {
-        ...state,
-        builds: action.payload,
-        loading: false,
-      };
-    },
-    SEARCH_BUILDS: (state, action) => {
-      return {
-        ...state,
-        builds: action.payload,
-        loading: false,
-      };
-    },
   },
 });
 
-export const { GET_BUILDS, SORT_BUILDS, SEARCH_BUILDS } = slice.actions;
+export const { GET_BUILDS } = slice.actions;
 export default slice.reducer;

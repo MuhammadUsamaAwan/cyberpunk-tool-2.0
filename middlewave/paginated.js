@@ -10,9 +10,27 @@ module.exports = function paginatedResults(model) {
 
     const results = {};
 
-    results.pages = Math.ceil(
-      parseFloat((await model.countDocuments().exec()) / limit)
-    );
+    if (user !== undefined && text === undefined)
+      results.pages = Math.ceil(
+        parseFloat((await model.countDocuments({ user }).exec()) / limit)
+      );
+    else if (user === undefined && text !== undefined)
+      results.pages = Math.ceil(
+        parseFloat(
+          (await model
+            .countDocuments({
+              $or: [
+                { title: { $regex: text, $options: 'i' } },
+                { name: { $regex: text, $options: 'i' } },
+              ],
+            })
+            .exec()) / limit
+        )
+      );
+    else
+      results.pages = Math.ceil(
+        parseFloat((await model.countDocuments().exec()) / limit)
+      );
 
     try {
       if (user === undefined) {
