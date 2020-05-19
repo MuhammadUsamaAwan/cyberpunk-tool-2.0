@@ -86,6 +86,7 @@ body {
 /* annoying underline*/
 a {
   text-decoration: none;
+  color: var(--primary-color);
 }
 
 /* container*/
@@ -176,6 +177,8 @@ a {
   font-size: 3rem;
   line-height: 1.2;
   margin-bottom: 1rem;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--yellow-color);
 }
 
 /* for the landing page */
@@ -248,7 +251,7 @@ ul {
   color: var(--secondary-color);
 }
 
-.navbar .welcome span {
+.navbar span {
   margin-right: 0.6rem;
 }
 
@@ -332,8 +335,93 @@ button {
   text-align: center;
 }
 
+.flex-container-no-rs {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
 .flex-item {
   padding: 2rem;
+}
+
+/* for the search bar */
+.search {
+  background-color: transparent;
+  color: #00f0ff;
+  border-color: #00f0ff;
+  border-width: 0.1rem;
+  padding: 10px 0.5rem 10px 1rem;
+  width: 20rem;
+  outline: none;
+  transition: all 200ms ease-in-out;
+}
+
+.search:hover,
+.search:focus {
+  box-shadow: 0px 0px 5px 2px rgba(0, 240, 255, 1);
+}
+
+.search-icon {
+  padding: 10px 15px 10px 15px;
+  border: none;
+  background-color: #00f0ff;
+  cursor: pointer;
+  color: black;
+}
+
+/*for dropdown menu*/
+
+.dropdown {
+  margin-left: 1rem;
+}
+
+.dropdown button {
+  background-color: #1a4040;
+  color: #00f0ff;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #1a4040;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-link {
+  color: #00f0ff;
+  padding: 12px 16px;
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.dropdown-link:hover {
+  background-color: #3a4e93;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  color: #e90848;
+}
+
+/* for table*/
+.table {
+  width: 100%;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.table tbody {
+  text-align: center;
 }
 
 /* media screen for responsiveness*/
@@ -378,7 +466,7 @@ button {
     margin-bottom: 1rem;
   }
 
-  .navbar .welcome {
-    display: none;
+  .search {
+    width: 10rem;
   }
 }
