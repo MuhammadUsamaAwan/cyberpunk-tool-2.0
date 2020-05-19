@@ -70,3 +70,43 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   dispatch(LOGOUT());
 };
+
+//forgotpassword
+export const forgotPassword = (email) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const body = JSON.stringify({ email });
+  try {
+    const res = await axios.post('./api/users/forgotpassword', body, config);
+    dispatch(setAlert(res.data, 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+  }
+};
+
+//resetpassword
+export const resetPassword = (password, password2, token) => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const body = JSON.stringify({ password, password2, token });
+  try {
+    const res = await axios.post('./api/users/resetpassword', body, config);
+    dispatch(setAlert(res.data, 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+  }
+};

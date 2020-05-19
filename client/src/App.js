@@ -6,6 +6,8 @@ import Landing from './components/layout/landing/Landing';
 import Footer from './components/layout/Footer';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import ForgotPassword from './components/auth/ForgotPassword';
+import ResetPassword from './components/auth/ResetPassword';
 import Alert from './components/layout/Alert';
 import Builds from './components/builds/Builds';
 //Redux
@@ -33,6 +35,8 @@ const App = () => {
           <Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
+            <Route exact path='/forgotpassword' component={ForgotPassword} />
+            <Route exact path='/resetpassword' component={ResetPassword} />
             <Route exact path='/builds' component={Builds} />
           </Switch>
         </section>

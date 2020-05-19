@@ -4,6 +4,7 @@ import { setAlert } from '../../store/actions/alert';
 import { register } from '../../store/actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Recaptcha from 'react-recaptcha';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -11,25 +12,29 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     email: '',
     password: '',
     password2: '',
+    human: false,
   });
 
-  const { name, email, password, password2 } = formData;
+  const { name, email, password, password2, human } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password !== password2) {
-      setAlert('Passwords do not match', 'danger');
-    }
-    register({ name, email, password });
+    if (password !== password2) setAlert('Passwords do not match', 'danger');
+    else if (human === false)
+      setAlert('Please verify that you are human', 'danger');
+    else register({ name, email, password });
   };
 
   // Redirect is success
   if (isAuthenticated) {
     return <Redirect to='/builds' />;
   }
+
+  const verifyCallback = () => setFormData({ ...formData, human: true });
+  const expiredCallback = () => setFormData({ ...formData, human: false });
 
   return (
     <React.Fragment>
@@ -78,6 +83,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             required
           />
         </div>
+        <Recaptcha
+          sitekey='6LdXFfcUAAAAADxbTZEZ4-vwouOQCAHC0FX4t3Hm'
+          render='explicit'
+          verifyCallback={verifyCallback}
+          expiredCallback={expiredCallback}
+          theme='dark'
+        />
         <input type='submit' className='btn' value='Register' />
       </form>
       <p className='my-1'>

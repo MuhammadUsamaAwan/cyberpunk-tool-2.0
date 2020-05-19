@@ -2,22 +2,21 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../store/actions/auth';
+import { forgotPassword } from '../../store/actions/auth';
 
-const Login = ({ login, isAuthenticated }) => {
+const ForgotPassword = ({ forgotPassword, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
   });
 
-  const { email, password } = formData;
+  const { email } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
+    forgotPassword(email);
   };
 
   //redirect if logged in
@@ -27,9 +26,9 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <React.Fragment>
-      <h1 className='large primary'>Sign In</h1>
+      <h1 className='large primary'>Forgot Password?</h1>
       <p className='lead'>
-        <i className='fa fa-user' /> Sign Into Your Account
+        <i className='fa fa-user' /> Enter Your Email
       </p>
       <form className='form' onSubmit={onSubmit}>
         <div className='form-group'>
@@ -42,18 +41,7 @@ const Login = ({ login, isAuthenticated }) => {
             required
           />
         </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            minLength='6'
-            value={password}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <input type='submit' className='btn btn-primary' value='Login' />
+        <input type='submit' className='btn btn-primary' value='Send Email' />
       </form>
       <p className='my-1'>
         Don't have an account?{' '}
@@ -61,18 +49,12 @@ const Login = ({ login, isAuthenticated }) => {
           Sign Up
         </Link>
       </p>
-      <p className='my-1'>
-        Forgot Your Password?{' '}
-        <Link className='primary' to='/forgotpassword'>
-          Click Here
-        </Link>
-      </p>
     </React.Fragment>
   );
 };
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
+ForgotPassword.propTypes = {
+  forgotPassword: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
@@ -80,4 +62,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { forgotPassword })(ForgotPassword);

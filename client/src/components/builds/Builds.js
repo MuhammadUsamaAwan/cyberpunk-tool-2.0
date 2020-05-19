@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import Pagination from '../../ultis/Pagination';
+import Moment from 'react-moment';
 
 const Builds = ({ getBuilds, builds: { builds, loading } }) => {
   const [searchText, setSearchText] = useState('');
@@ -13,7 +14,7 @@ const Builds = ({ getBuilds, builds: { builds, loading } }) => {
   const [sort, setSort] = useState('');
 
   useEffect(() => {
-    getBuilds(currPage, 3, sort, text);
+    getBuilds(currPage, 20, sort, text);
   }, [currPage, sort, text]);
 
   const onChange = (e) => setSearchText(e.target.value);
@@ -48,13 +49,28 @@ const Builds = ({ getBuilds, builds: { builds, loading } }) => {
             Sort Builds <i className='fa fa-sort-desc'></i>
           </button>
           <div className='dropdown-content'>
-            <a id='upvotes' onClick={onClick} className='dropdown-link'>
+            <a
+              id='upvotes'
+              href='#!'
+              onClick={onClick}
+              className='dropdown-link'
+            >
               By Upvotes
             </a>
-            <a id='newest' onClick={onClick} className='dropdown-link'>
+            <a
+              id='newest'
+              href='#!'
+              onClick={onClick}
+              className='dropdown-link'
+            >
               Newest First
             </a>
-            <a id='oldest' onClick={onClick} className='dropdown-link'>
+            <a
+              id='oldest'
+              href='#!'
+              onClick={onClick}
+              className='dropdown-link'
+            >
               Oldest First
             </a>
           </div>
@@ -87,7 +103,9 @@ const Builds = ({ getBuilds, builds: { builds, loading } }) => {
                       {build.name}
                     </Link>
                   </td>
-                  <td>{build.date.slice(0, 10)}</td>
+                  <td>
+                    <Moment fromNow>{build.date}</Moment>
+                  </td>
                 </tr>
               ))}
             </tbody>
