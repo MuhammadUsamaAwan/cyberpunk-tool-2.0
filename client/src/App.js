@@ -13,6 +13,7 @@ import Alert from './components/layout/Alert';
 import Builds from './components/builds/Builds';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Profile from './components/profile/Profile';
+import Profiles from './components/profile/Profiles';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store/store';
@@ -43,6 +44,7 @@ const App = () => {
             <Route exact path='/changepassword' component={ChangePassword} />
             <Route exact path='/builds' component={Builds} />
             <PrivateRoute exact path='/profile' component={Profile} />
+            <Route exact path='/profile/:id' component={Profiles} />
           </Switch>
         </section>
         <Footer />
