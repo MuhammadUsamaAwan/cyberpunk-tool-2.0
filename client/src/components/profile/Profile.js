@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getUserBuilds } from '../../store/actions/builds';
+import { getUserBuilds } from '../../store/actions/userBuilds';
 import Spinner from '../layout/Spinner';
 import Pagination from '../../ultis/Pagination';
 import Moment from 'react-moment';
@@ -14,7 +14,7 @@ const Profile = ({
 }) => {
   const [currPage, setCurrPage] = useState(1);
   useEffect(() => {
-    getUserBuilds(currPage, 20, 'newest', user._id);
+    getUserBuilds(currPage, 20, 'newest', user._id, 'true');
   }, [currPage, user._id]);
 
   let length = 0;
@@ -87,7 +87,7 @@ Profile.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  builds: state.profile,
+  builds: state.userBuilds,
   profile: state.auth,
 });
 

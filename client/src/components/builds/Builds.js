@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { getBuilds } from '../../store/actions/builds';
+import { getBuilds } from '../../store/actions/userBuilds';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';

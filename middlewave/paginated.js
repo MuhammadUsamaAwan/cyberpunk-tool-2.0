@@ -5,12 +5,19 @@ module.exports = function paginatedResults(model) {
     const sort = req.query.sort;
     const user = req.query.user;
     const text = req.query.text;
+    const private = req.query.private;
 
     const startIndex = (page - 1) * limit;
 
     const results = {};
 
-    if (user !== undefined && text === undefined)
+    if (user !== undefined && text === undefined && private !== 'true')
+      results.pages = Math.ceil(
+        parseFloat(
+          (await model.countDocuments({ user, private: false }).exec()) / limit
+        )
+      );
+    else if (user !== undefined && text === undefined && private === 'true')
       results.pages = Math.ceil(
         parseFloat((await model.countDocuments({ user }).exec()) / limit)
       );
@@ -98,27 +105,51 @@ module.exports = function paginatedResults(model) {
               .exec();
         }
       } else {
-        if (sort === 'upvotes')
-          results.results = await model
-            .find({ user })
-            .sort({ upvotes: -1 })
-            .limit(limit)
-            .skip(startIndex)
-            .exec();
-        else if (sort === 'oldest')
-          results.results = await model
-            .find({ user })
-            .sort({ date: 1 })
-            .limit(limit)
-            .skip(startIndex)
-            .exec();
-        else
-          results.results = await model
-            .find({ user })
-            .sort({ date: -1 })
-            .limit(limit)
-            .skip(startIndex)
-            .exec();
+        if (private === 'true') {
+          if (sort === 'upvotes')
+            results.results = await model
+              .find({ user })
+              .sort({ upvotes: -1 })
+              .limit(limit)
+              .skip(startIndex)
+              .exec();
+          else if (sort === 'oldest')
+            results.results = await model
+              .find({ user })
+              .sort({ date: 1 })
+              .limit(limit)
+              .skip(startIndex)
+              .exec();
+          else
+            results.results = await model
+              .find({ user })
+              .sort({ date: -1 })
+              .limit(limit)
+              .skip(startIndex)
+              .exec();
+        } else {
+          if (sort === 'upvotes')
+            results.results = await model
+              .find({ user, private: false })
+              .sort({ upvotes: -1 })
+              .limit(limit)
+              .skip(startIndex)
+              .exec();
+          else if (sort === 'oldest')
+            results.results = await model
+              .find({ user, private: false })
+              .sort({ date: 1 })
+              .limit(limit)
+              .skip(startIndex)
+              .exec();
+          else
+            results.results = await model
+              .find({ user, private: false })
+              .sort({ date: -1 })
+              .limit(limit)
+              .skip(startIndex)
+              .exec();
+        }
       }
       res.paginatedResults = results;
       next();
