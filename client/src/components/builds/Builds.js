@@ -15,7 +15,7 @@ const Builds = ({ getBuilds, builds: { builds, loading } }) => {
 
   useEffect(() => {
     getBuilds(currPage, 20, sort, text);
-  }, [currPage, sort, text]);
+  }, [currPage, sort, text, getBuilds]);
 
   const onChange = (e) => setSearchText(e.target.value);
   const onSubmit = (e) => {

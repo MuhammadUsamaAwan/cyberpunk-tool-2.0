@@ -11,17 +11,33 @@ module.exports = function paginatedResults(model) {
 
     const results = {};
 
-    if (user !== undefined && text === undefined && private !== 'true')
+    if (user !== undefined && text === undefined && private !== 'true') {
       results.pages = Math.ceil(
         parseFloat(
           (await model.countDocuments({ user, private: false }).exec()) / limit
         )
       );
-    else if (user !== undefined && text === undefined && private === 'true')
+      results.total = await model
+        .countDocuments({ user, private: false })
+        .exec();
+      let temp = await model.find({ user });
+      let upvotes_no = 0;
+      temp.forEach((element) => {
+        upvotes_no = element.upvotes.length + upvotes_no;
+      });
+      results.upvotes = upvotes_no;
+    } else if (user !== undefined && text === undefined && private === 'true') {
       results.pages = Math.ceil(
         parseFloat((await model.countDocuments({ user }).exec()) / limit)
       );
-    else if (user === undefined && text !== undefined)
+      results.total = await model.countDocuments({ user }).exec();
+      let temp = await model.find({ user });
+      let upvotes_no = 0;
+      temp.forEach((element) => {
+        upvotes_no = element.upvotes.length + upvotes_no;
+      });
+      results.upvotes = upvotes_no;
+    } else if (user === undefined && text !== undefined)
       results.pages = Math.ceil(
         parseFloat(
           (await model

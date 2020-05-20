@@ -19,12 +19,7 @@ const Profiles = ({
   useEffect(() => {
     getProfile(match.params.id);
     getUserBuilds(currPage, 20, 'newest', match.params.id, 'false');
-  }, []);
-
-  let length = 0;
-  if (!loading) {
-    builds.results.map((build) => (length = build.upvotes.length + length));
-  }
+  }, [currPage, match.params.id, getProfile, getUserBuilds]);
 
   return (
     <React.Fragment>
@@ -32,8 +27,8 @@ const Profiles = ({
         <div>
           <div className='flex-container-col'>
             <div className='large'>{profile.user.name}</div>
-            <p>{builds.results.length} Total Builds</p>
-            <p>{length} Total Upvotes</p>
+            <p>{builds.total} Total Builds</p>
+            <p>{builds.upvotes} Total Upvotes</p>
             <p>
               Joined <Moment fromNow>{profile.user.date}</Moment>
             </p>
