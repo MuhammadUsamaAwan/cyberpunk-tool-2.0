@@ -110,3 +110,25 @@ export const resetPassword = (password, password2, token) => async (
     }
   }
 };
+
+//changepassword
+export const changePassword = (currPassword, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const body = JSON.stringify({
+    password: currPassword,
+    newPassword: password,
+  });
+  try {
+    const res = await axios.post('./api/users/changepassword', body, config);
+    dispatch(setAlert(res.data, 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+  }
+};
