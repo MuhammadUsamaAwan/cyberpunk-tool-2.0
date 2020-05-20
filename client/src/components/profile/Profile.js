@@ -59,11 +59,7 @@ const Profile = ({
                       </Link>{' '}
                     </td>
                     <td>{build.upvotes.length}</td>
-                    <td>
-                      <Link to={`/profile/${build.private}`} className='link'>
-                        {build.name}
-                      </Link>
-                    </td>
+                    <td>{build.private ? 'Yes' : 'No'}</td>
                     <td>
                       <Moment fromNow>{build.date}</Moment>
                     </td>
