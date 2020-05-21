@@ -21,8 +21,32 @@ const slice = createSlice({
         loading: false,
       };
     },
+    ADD_COMMENT: (state, action) => {
+      return {
+        ...state,
+        detail: { ...state.detail, comments: action.payload },
+        loading: false,
+      };
+    },
+    REMOVE_COMMENT: (state, action) => {
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          comments: state.detail.comments.filter(
+            comment => comment._id !== action.payload
+          ),
+        },
+        loading: false,
+      };
+    },
   },
 });
 
-export const { GET_BUILD_DETAIL, UPDATE_UPVOTES } = slice.actions;
+export const {
+  GET_BUILD_DETAIL,
+  UPDATE_UPVOTES,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+} = slice.actions;
 export default slice.reducer;

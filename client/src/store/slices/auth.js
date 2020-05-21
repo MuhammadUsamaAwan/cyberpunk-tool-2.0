@@ -33,6 +33,7 @@ const slice = createSlice({
         token: null,
         isAuthenticated: false,
         loading: false,
+        user: null,
       };
     },
     AUTH_ERROR: (state, action) => {
@@ -42,6 +43,7 @@ const slice = createSlice({
         token: null,
         isAuthenticated: false,
         loading: false,
+        user: null,
       };
     },
     LOGIN_SUCCESS: (state, action) => {
@@ -60,6 +62,7 @@ const slice = createSlice({
         token: null,
         isAuthenticated: false,
         loading: false,
+        user: null,
       };
     },
     LOGOUT: (state, action) => {
@@ -69,6 +72,7 @@ const slice = createSlice({
         token: null,
         isAuthenticated: false,
         loading: false,
+        user: null,
       };
     },
   },

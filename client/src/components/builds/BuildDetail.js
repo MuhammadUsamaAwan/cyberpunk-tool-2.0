@@ -8,6 +8,7 @@ import {
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 import Moment from 'react-moment';
+import Comments from './Comments';
 
 const BuildDetail = ({
   buildDetail: { loading, detail },
@@ -55,6 +56,7 @@ const BuildDetail = ({
           Submitted <Moment fromNow>{detail.date}</Moment>
         </p>
       </div>
+      <Comments buildID={detail._id} />
     </React.Fragment>
   );
 };
@@ -63,6 +65,8 @@ BuildDetail.propTypes = {
   getBuildDetail: PropTypes.func.isRequired,
   buildDetail: PropTypes.object,
   auth: PropTypes.object.isRequired,
+  upvote: PropTypes.func.isRequired,
+  devote: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
