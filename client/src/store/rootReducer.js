@@ -4,6 +4,7 @@ import auth from './slices/auth';
 import builds from './slices/builds';
 import userBuilds from './slices/userBuilds';
 import profiles from './slices/profiles';
+import buildDetail from './slices/buildDetail';
 
 export default combineReducers({
   alert,
@@ -11,4 +12,5 @@ export default combineReducers({
   builds,
   userBuilds,
   profiles,
+  buildDetail,
 });

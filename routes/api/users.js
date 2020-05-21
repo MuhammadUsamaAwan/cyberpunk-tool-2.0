@@ -15,12 +15,15 @@ const nodemailer = require('nodemailer');
 router.post(
   '/',
   [
-    check('name', 'Name must be between 6 and 20 characters').isLength({ min: 6, max:20 }),
+    check('name', 'Name must be between 6 and 20 characters').isLength({
+      min: 6,
+      max: 20,
+    }),
     check('email', 'Please include a valid email').isEmail(),
     check(
       'password',
       'Please enter a password between 6 and 20 characters'
-    ).isLength({ min: 6, max:20 }),
+    ).isLength({ min: 6, max: 20 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -182,7 +185,15 @@ router.get('/user/:id', async (req, res) => {
 // @access   Private
 router.post(
   '/changename',
-  [auth, [check('name', 'Name must be between 6 and 20 characters').isLength({ min: 6, max:20 })]],
+  [
+    auth,
+    [
+      check('name', 'Name must be between 6 and 20 characters').isLength({
+        min: 6,
+        max: 20,
+      }),
+    ],
+  ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -217,7 +228,7 @@ router.post(
       check(
         'newPassword',
         'Please enter a new password between 6 and 20 characters'
-      ).isLength({ min: 6, max:20 }),
+      ).isLength({ min: 6, max: 20 }),
     ],
   ],
   async (req, res) => {
@@ -256,9 +267,11 @@ router.post(
 router.post(
   '/resetpassword',
   [
-    check('password', 'Please enter a password between 6 and 20 characters'
-    ).isLength({ min: 6, max:20 }),
-    check('token','Token not valid').isLength({ min: 19, max:21 })
+    check(
+      'password',
+      'Please enter a password between 6 and 20 characters'
+    ).isLength({ min: 6, max: 20 }),
+    check('token', 'Token not valid').isLength({ min: 19, max: 21 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -270,17 +283,18 @@ router.post(
     try {
       const user = await User.findOne({ token });
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Token not valid' }] });
+        return res.status(400).json({ errors: [{ msg: 'Token not valid' }] });
       }
 
       const salt = await bcrypt.genSalt(10);
       password = await bcrypt.hash(password, salt);
 
-      await User.findOneAndUpdate({ token }, {
-        password
-      });
+      await User.findOneAndUpdate(
+        { token },
+        {
+          password,
+        }
+      );
       res.json('Password changed');
     } catch (err) {
       console.error(err.message);
@@ -294,9 +308,7 @@ router.post(
 // @access   Public
 router.post(
   '/forgotpassword',
-  [
-    check('email', 'Email is required').exists(),
-  ],
+  [check('email', 'Email is required').exists()],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -307,44 +319,53 @@ router.post(
     try {
       const user = await User.findOne({ email });
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'User do not exist' }] });
+        return res.status(400).json({ errors: [{ msg: 'User do not exist' }] });
       }
       async function main() {
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
-          service: "Gmail",
+          service: 'Gmail',
           auth: {
             user: config.get('gmailUser'), // generated ethereal user
-            pass: config.get('gmailPass') // generated ethereal password
-          }
+            pass: config.get('gmailPass'), // generated ethereal password
+          },
         });
         function makeid(length) {
-          var result           = '';
-          var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          var result = '';
+          var characters =
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
           var charactersLength = characters.length;
-          for ( var i = 0; i < length; i++ ) {
-             result += characters.charAt(Math.floor(Math.random() * charactersLength));
+          for (var i = 0; i < length; i++) {
+            result += characters.charAt(
+              Math.floor(Math.random() * charactersLength)
+            );
           }
           return result;
-       }
-       const token = makeid(20);
-       await User.findOneAndUpdate( { email }, {
-        token
-      });
+        }
+        const token = makeid(20);
+        await User.findOneAndUpdate(
+          { email },
+          {
+            token,
+          }
+        );
         // send mail with defined transport object
         let info = await transporter.sendMail({
-          from: "<noreply@cyberpunktool.com>", // sender address
+          from: '<noreply@cyberpunktool.com>', // sender address
           to: user.email, // list of receivers
-          subject: "Reset your cyberpunktool password", // Subject line
-          html: "<h3>Hello "+user.name+"</h3><p>Someone has requested a link to change your password. You can do this through the link below.</p><a href='http://localhost:3000/changepassword/'>Change my Password</a> <h4>Your Token is "+token+"</h4> <p>If you didn't request this, please ignore this email. Your password won't change until you access the link above and use the token to create a new one<p>" // html body
+          subject: 'Reset your cyberpunktool password', // Subject line
+          html:
+            '<h3>Hello ' +
+            user.name +
+            "</h3><p>Someone has requested a link to change your password. You can do this through the link below.</p><a href='http://localhost:3000/changepassword/'>Change my Password</a> <h4>Your Token is " +
+            token +
+            "</h4> <p>If you didn't request this, please ignore this email. Your password won't change until you access the link above and use the token to create a new one<p>", // html body
         });
-      
-        console.log("Message sent: %s", info.messageId);
+
+        console.log('Message sent: %s', info.messageId);
         res.status(200).send('Email Sent');
       }
-      
+
       main().catch(console.error);
     } catch (err) {
       console.error(err.message);

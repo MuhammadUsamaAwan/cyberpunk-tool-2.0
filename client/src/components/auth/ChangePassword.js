@@ -14,10 +14,10 @@ const ChangePassword = ({ setAlert, changePassword, isAuthenticated }) => {
 
   const { currPassword, password, password2 } = formData;
 
-  const onChange = (e) =>
+  const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) setAlert('Passwords do not match', 'danger');
     else changePassword(currPassword, password);
@@ -78,7 +78,7 @@ ChangePassword.propTypes = {
   etAlert: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 

@@ -44,6 +44,10 @@ body {
   color: var(--dark-color);
 }
 
+.white {
+  color: #fff;
+}
+
 /*background colors*/
 .alert {
   padding: 0.8rem;

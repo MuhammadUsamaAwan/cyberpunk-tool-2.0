@@ -44,7 +44,7 @@ const Profiles = ({
               </thead>
 
               <tbody className='primary'>
-                {builds.results.map((build) => (
+                {builds.results.map(build => (
                   <tr key={build._id}>
                     <td>
                       {' '}
@@ -79,11 +79,12 @@ Profiles.propTypes = {
   getUserBuilds: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   profile: state.profiles,
   builds: state.userBuilds,
 });
 
-export default connect(mapStateToProps, { getProfile, getUserBuilds })(
-  Profiles
-);
+export default connect(mapStateToProps, {
+  getProfile,
+  getUserBuilds,
+})(Profiles);

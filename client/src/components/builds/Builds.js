@@ -17,13 +17,13 @@ const Builds = ({ getBuilds, builds: { builds, loading } }) => {
     getBuilds(currPage, 20, sort, text);
   }, [currPage, sort, text, getBuilds]);
 
-  const onChange = (e) => setSearchText(e.target.value);
-  const onSubmit = (e) => {
+  const onChange = e => setSearchText(e.target.value);
+  const onSubmit = e => {
     e.preventDefault();
     setCurrPage(1);
     setText(searchText);
   };
-  const onClick = (e) => {
+  const onClick = e => {
     setCurrPage(1);
     setSort(e.target.id);
   };
@@ -89,7 +89,7 @@ const Builds = ({ getBuilds, builds: { builds, loading } }) => {
             </thead>
 
             <tbody className='primary'>
-              {builds.results.map((build) => (
+              {builds.results.map(build => (
                 <tr key={build._id}>
                   <td>
                     {' '}
@@ -128,7 +128,7 @@ Builds.propTypes = {
   build: PropTypes.array,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   builds: state.builds,
 });
 

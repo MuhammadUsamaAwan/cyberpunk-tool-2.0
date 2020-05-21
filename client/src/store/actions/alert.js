@@ -1,7 +1,7 @@
 import uuid from 'react-uuid';
 import { SET_ALERT, REMOVE_ALERT } from '../slices/alert';
 
-export const setAlert = (msg, type, timeout = 5000) => (dispatch) => {
+export const setAlert = (msg, type, timeout = 5000) => dispatch => {
   const id = uuid();
   dispatch(SET_ALERT({ msg, type, id }));
 

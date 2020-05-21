@@ -45,7 +45,7 @@ const Profile = ({
               </thead>
 
               <tbody className='primary'>
-                {builds.results.map((build) => (
+                {builds.results.map(build => (
                   <tr key={build._id}>
                     <td>
                       {' '}
@@ -80,7 +80,7 @@ Profile.propTypes = {
   getUserBuilds: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   builds: state.userBuilds,
   profile: state.auth,

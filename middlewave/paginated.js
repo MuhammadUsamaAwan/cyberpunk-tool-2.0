@@ -22,7 +22,7 @@ module.exports = function paginatedResults(model) {
         .exec();
       let temp = await model.find({ user });
       let upvotes_no = 0;
-      temp.forEach((element) => {
+      temp.forEach(element => {
         upvotes_no = element.upvotes.length + upvotes_no;
       });
       results.upvotes = upvotes_no;
@@ -33,7 +33,7 @@ module.exports = function paginatedResults(model) {
       results.total = await model.countDocuments({ user }).exec();
       let temp = await model.find({ user });
       let upvotes_no = 0;
-      temp.forEach((element) => {
+      temp.forEach(element => {
         upvotes_no = element.upvotes.length + upvotes_no;
       });
       results.upvotes = upvotes_no;

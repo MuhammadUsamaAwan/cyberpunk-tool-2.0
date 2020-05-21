@@ -11,6 +11,7 @@ import ResetPassword from './components/auth/ResetPassword';
 import ChangePassword from './components/auth/ChangePassword';
 import Alert from './components/layout/Alert';
 import Builds from './components/builds/Builds';
+import BuildDetail from './components/builds/BuildDetail';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Profile from './components/profile/Profile';
 import Profiles from './components/profile/Profiles';
@@ -43,6 +44,7 @@ const App = () => {
             <Route exact path='/resetpassword' component={ResetPassword} />
             <Route exact path='/changepassword' component={ChangePassword} />
             <Route exact path='/builds' component={Builds} />
+            <Route exact path='/builds/:id' component={BuildDetail} />
             <PrivateRoute exact path='/profile' component={Profile} />
             <Route exact path='/profile/:id' component={Profiles} />
           </Switch>

@@ -14,10 +14,10 @@ const ResetPassword = ({ setAlert, resetPassword, isAuthenticated }) => {
 
   const { password, password2, token } = formData;
 
-  const onChange = (e) =>
+  const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) setAlert('Passwords do not match', 'danger');
     else resetPassword(password, password2, token);
@@ -78,7 +78,7 @@ ResetPassword.propTypes = {
   setAlert: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 

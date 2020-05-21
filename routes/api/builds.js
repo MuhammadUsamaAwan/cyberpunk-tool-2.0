@@ -113,9 +113,7 @@ router.put('/upvote/:id', auth, async (req, res) => {
     const build = await Build.findById(req.params.id);
 
     // Check if the build has already been upvoted
-    if (
-      build.upvotes.some((upvote) => upvote.user.toString() === req.user.id)
-    ) {
+    if (build.upvotes.some(upvote => upvote.user.toString() === req.user.id)) {
       return res.status(400).json({ msg: 'Build already upvoted' });
     }
 
@@ -138,9 +136,7 @@ router.put('/devote/:id', auth, async (req, res) => {
     const build = await Build.findById(req.params.id);
 
     // Check if the build has already been upvoted
-    if (
-      !build.upvotes.some((upvote) => upvote.user.toString() === req.user.id)
-    ) {
+    if (!build.upvotes.some(upvote => upvote.user.toString() === req.user.id)) {
       return res.status(400).json({ msg: 'Build has not yet been upvoted' });
     }
 
@@ -151,7 +147,7 @@ router.put('/devote/:id', auth, async (req, res) => {
 
     await build.save();
 
-    return res.json(build.likes);
+    return res.json(build.upvotes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -201,7 +197,7 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
     // Pull out comment
     const comment = build.comments.find(
-      (comment) => comment.id === req.params.comment_id
+      comment => comment.id === req.params.comment_id
     );
     // Make sure comment exists
     if (!comment) {
@@ -243,7 +239,7 @@ router.post(
 
       // Pull out comment
       const comment = build.comments.find(
-        (comment) => comment.id === req.params.comment_id
+        comment => comment.id === req.params.comment_id
       );
       // Make sure comment exists
       if (!comment) {
@@ -280,7 +276,7 @@ router.delete(
 
       // Pull out comment
       const comment = build.comments.find(
-        (comment) => comment.id === req.params.comment_id
+        comment => comment.id === req.params.comment_id
       );
       // Make sure comment exists
       if (!comment) {
@@ -288,7 +284,7 @@ router.delete(
       }
       // Pull out reply
       const reply = comment.replies.find(
-        (reply) => reply.id === req.params.reply_id
+        reply => reply.id === req.params.reply_id
       );
       // Make sure reply exists
       if (!reply) {

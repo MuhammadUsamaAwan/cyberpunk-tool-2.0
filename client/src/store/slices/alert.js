@@ -8,7 +8,7 @@ const slice = createSlice({
       return [...state, action.payload];
     },
     REMOVE_ALERT: (state, action) => {
-      return state.filter((alert) => alert.id !== action.payload);
+      return state.filter(alert => alert.id !== action.payload);
     },
   },
 });
